@@ -1,0 +1,45 @@
+{% extends "bootstrap/base.html" %}
+
+{% block content %}
+    <div style="text-align: center;">
+        <h1>Question 4:</h1>
+        <h3>What animal goes "Gobble Gobble Gobble Gobble"?</h3>
+        <form method="post">
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="answer" id="exampleRadios1" value="1" checked>
+                <label class="form-check-label" for="exampleRadios1">
+                    An Ostrich
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="answer" id="exampleRadios2" value="2">
+                <label class="form-check-label" for="exampleRadios2">
+                    A Turkey
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="answer" id="exampleRadios3" value="3">
+                <label class="form-check-label" for="exampleRadios3">
+                    Ryan (dad)
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="answer" id="exampleRadios4" value="4">
+                <label class="form-check-label" for="exampleRadios4">
+                    A Chicken
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="answer" id="exampleRadios4" value="5">
+                <label class="form-check-label" for="exampleRadios4">
+                    Norm
+                </label>
+            </div>
+            <input type="submit" class="btn btn-success"/>       
+        </form>
+
+
+    </div>
+
+
+{% endblock %}
