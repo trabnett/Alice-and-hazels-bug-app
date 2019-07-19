@@ -100,7 +100,7 @@ class App extends React.Component{
       <div className="App">
         <body>
           <div>
-            <h1>Alice and Hazel's Bug App!</h1>
+            <h1>Welcome to Alice and Hazel's Bug App!</h1>
             <Select 
               options={ colors } 
               onChange={handleChange}/>
