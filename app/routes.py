@@ -1,92 +1,131 @@
 from flask import render_template, request, redirect
 from app import app
 
-x = []
+correct_answers = {
+    1 : "The correct answer was 3: Trees make the air cleaner",
+    2 : "The correct answer was 1: Seed, Tree, Apple",
+    3 : "The correct answer was 1: Everyday",
+    4 : "The correct answer was 3: Fall",
+    5 : "The correct answer was 2: Turkey",
+    6 : "The correct answer was 4: Age got nothing to do with. Everyone should care!",
+    7 : "The correct answer was 5: A vital part of the aquatic food chain",
+}
 @app.route('/')
 def index():
-    x.clear()
-    print(x)
     return render_template('home.html')
 
 @app.route('/q1', methods=['GET', 'POST'])
 def q1():
-    print(request.method)
+    score = ''
     if request.method == 'POST':
         y = request.form['answer']
         if int(y) == 3:
-            x.append(["q1", "correct", "The correct answer was 3: Trees make the air cleaner"])
+            score = '1'
         else:
-            x.append(["q1", "wrong", "The correct answer was 3 Trees make the air cleaner"])
-        print(x)
-        return redirect('/q2')
-    return render_template('q1.html', x=x)
+            score = '0'
+        return redirect(f'/q2?score={score}')
+    return render_template('q1.html')
 
 @app.route('/q2', methods=['GET', 'POST'])
 def q2():
+    if not request.args.get('score'):
+        return redirect('/')
     if request.method == 'POST':
         y = request.form['answer']
         if int(y) == 1:
-            x.append(["q2", "correct", "The correct answer was 1: Seed, Tree, Apple"])
+            score = request.args['score'] + '1'
         else:
-            x.append(["q2", "wrong", "The correct answer was 1: Seed, Tree, Apple"])
-        print(x)
-        return redirect('/q3')
-    return render_template('q2.html', x=x)
+            score = request.args['score'] + '0'
+        return redirect(f'/q3?score={score}')
+    return render_template('q2.html')
 
 @app.route('/q3', methods=['GET', 'POST'])
 def q3():
+    if not request.args.get('score'):
+        return redirect('/')
     if request.method == 'POST':
         y = request.form['answer']
         if int(y) == 1:
-            x.append(["q3", "correct", "The correct answer was 1: Everyday"])
+            score = request.args['score'] + '1'
         else:
-            x.append(["q3", "wrong", "The correct answer was 1: Everyday"])
-        return redirect('/q4')
-    return render_template('q3.html', x=x)
+            score = request.args['score'] + '0'
+        return redirect(f'/q4?score={score}')
+    return render_template('q3.html')
 
 @app.route('/q4', methods=['GET', 'POST'])
 def q4():
+    if not request.args.get('score'):
+        return redirect('/')
     if request.method == 'POST':
         y = request.form['answer']
         if int(y) == 3:
-            x.append(["q4", "correct", "The correct answer was 3: Fall"])
+            score = request.args['score'] + '1'
         else:
-            x.append(["q4", "wrong", "The correct answer was 3: Fall"])
-        print(x)
-        return redirect('/q5')
-    return render_template('q4.html', x=x)
+            score = request.args['score'] + '0'
+        return redirect(f'/q5?score={score}')
+    return render_template('q4.html')
 
 @app.route('/q5', methods=['GET', 'POST'])
 def q5():
+    if not request.args.get('score'):
+        return redirect('/')
     if request.method == 'POST':
         y = request.form['answer']
         if int(y) == 2:
-            x.append(["q5", "correct", "The correct answer was 2: Turkey"])
+            score = request.args['score'] + '1'
         else:
-            x.append(["q5", "wrong", "The correct answer was 2: Turkey"])
-        print(x)
-        return redirect('/results')
-    return render_template('q5.html', x=x)
+            score = request.args['score'] + '0'
+        return redirect(f'/q6?score={score}')
+    return render_template('q5.html')
+
+@app.route('/q6', methods=['GET', 'POST'])
+def q6():
+    if not request.args.get('score'):
+        return redirect('/')
+    if request.method == 'POST':
+        y = request.form['answer']
+        if int(y) == 4:
+            score = request.args['score'] + '1'
+        else:
+            score = request.args['score'] + '0'
+        return redirect(f'/q7?score={score}')
+    return render_template('q6.html')
+
+@app.route('/q7', methods=['GET', 'POST'])
+def q7():
+    if not request.args.get('score'):
+        return redirect('/')
+    if request.method == 'POST':
+        y = request.form['answer']
+        if int(y) == 5:
+            score = request.args['score'] + '1'
+        else:
+            score = request.args['score'] + '0'
+        return redirect(f'/results?score={score}')
+    return render_template('q7.html')
 
 @app.route('/results')
 def results():
+    if not request.args.get('score'):
+        return redirect('/')
     score = 0
+    for i in request.args['score']:
+        score += int(i)
     comment = ""
-    new_scores = x
-    for result in x:
-        if result[1] == 'correct':
-            score += 1
     if score == 0:
         comment = "Great job for trying."
     elif score == 1:
-        comment = "One out of five! That's awsome!"
+        comment = "One out of seven! That's awesome!"
     elif score == 2:
-        comment = "Two out of Five! That is really really good!"
+        comment = "Two out of seven! That is really really good!"
     elif score == 3:
-        comment = "Three out of Five! I never thought anyone would do this well!"
+        comment = "Three out of seven! I never thought anyone would do this well!"
     elif score == 4:
-        comment = "Four out of Five! I wish I could swear, becuase I am blown away!"
+        comment = "Four out of seven! I wish I could swear, because I am blown away!"
     elif score == 5:
         comment = "Oh my goodness! This is the most impressive thing I have ever seen, and I once saw a Lionel Richie Concert!"
-    return render_template('results.html', x=new_scores, score=score, comment=comment)
-x = []
+    elif score == 6:
+        comment = "Everytime the number 6 is used, you owe Drake a royalty fee of $2.24, so while this is a good score, it will cost you."
+    elif score == 7:
+        comment = "Perfect score! The environment is saved!"
+    return render_template('results.html', score=score, comment=comment)
